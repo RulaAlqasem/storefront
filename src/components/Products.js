@@ -1,7 +1,6 @@
 import React from 'react';
 import './Products.scss';
-import { connect } from 'react-redux';
-import { switchProducts } from '../store/products.js';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -10,6 +9,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, switchProducts } from '../store/action';
 
 
 const useStyles = makeStyles({
@@ -22,12 +23,14 @@ const useStyles = makeStyles({
 });
 
 const Products = (props) => {
+  const dispatch = useDispatch()
+  const state = useSelector(state => state)
   const classes = useStyles();
   return (
     <div className="products">
-      <h2>{props.category.displayName}</h2>
-      <h2 className="description">{props.category.description}</h2>
-      {props.products.map((product, i) => {
+      <h2>{state.categories.activeCategory.displayName}</h2>
+      <h2 className="description">{state.categories.activeCategory.description}</h2>
+      {state.products.products.map((product, i) => {
         return (
           <Card key={i} className={classes.root}>
             <CardActionArea>
@@ -49,7 +52,7 @@ const Products = (props) => {
               </CardContent>
             </CardActionArea>
             <CardActions>
-              <Button size="small" color="primary">
+              <Button size="small" color="primary" onClick={() => dispatch(addToCart(product))}>
                 ADD TO CART
               </Button>
               <Button size="small" color="primary">
@@ -63,15 +66,5 @@ const Products = (props) => {
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    products: state.products.products,
-    category: state.categories.activeCategory
-  }
-}
 
-const mapDispatchToProps = {
-  switchProducts,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Products);
+export default Products;
