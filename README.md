@@ -11,6 +11,7 @@
 
 # lab 37
   *  [pull req](https://github.com/RulaAlqasem/storefront/pull/2)
+  *  [pull req2](https://github.com/RulaAlqasem/storefront/pull/3)
 
 
-  * [netlify](https://deploy-preview-2--zen-ride-486f6f.netlify.app/?utm_source=github&utm_campaign=bot_dp)
+  * [netlify](https://deploy-preview-3--zen-ride-486f6f.netlify.app/?utm_source=github&utm_campaign=bot_dp)
