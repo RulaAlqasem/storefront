@@ -47,7 +47,7 @@ const Products = (props) => {
                   ${product.price}
                 </Typography>
                 <Typography gutterBottom variant="h5" component="h2">
-                  IN STOCK: {product.inventory}
+                  IN STOCK: {product.inStock}
                 </Typography>
               </CardContent>
             </CardActionArea>

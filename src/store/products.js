@@ -4,7 +4,7 @@ let productList = [
     category: 'electronics',
     description: 'Typing Device',
     price: 5,
-    inventory: 10,
+    inStock: 10,
     count: 0
   },
   {
@@ -12,7 +12,7 @@ let productList = [
     category: 'electronics',
     description: 'Mousing Device',
     price: 10,
-    inventory: 5,
+    inStock: 5,
     count: 0
   },
   {
@@ -20,7 +20,7 @@ let productList = [
     category: 'food',
     description: 'Delicious',
     price: 20,
-    inventory: 2,
+    inStock: 2,
     count: 0
   },
   {
@@ -28,7 +28,7 @@ let productList = [
     category: 'food',
     description: 'yummiiii',
     price: 3,
-    inventory: 7,
+    inStock: 7,
     count: 0
   },
 ]
