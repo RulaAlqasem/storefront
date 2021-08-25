@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, removeFromCart, remove } from '../store/action';
+import { addToCart, removeFromCart, remove } from '../store/cart';
 import { Paper } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import { blue } from '@material-ui/core/colors';
@@ -44,18 +44,19 @@ const SimpleCart = (props) => {
   const state = useSelector(state => state)
   const dispatch = useDispatch()
   const classes = useStyles();
-  if (state.cart.cart.length > 0) {
+  if (state.cart.cart?.length > 0) {
     return (
       <Card className={classes.root}>
         <CardActionArea>
           <CardContent>
             {state.cart.cart.map((product, i) => {
+              let count = 1
               return (
                 <Paper>
 
                   <Typography key={i}>
                     <CardHeader
-                      avatar={<Avatar className={classes.avatar}>{product.count}
+                      avatar={<Avatar className={classes.avatar}>{product.cart}
 
                       </Avatar>
 
@@ -72,12 +73,12 @@ const SimpleCart = (props) => {
 
                   <Button variant="outlined" color="primary" className={classes.margin}
 
-                    onClick={() => dispatch(addToCart(product))}>
+                    onClick={() => { dispatch(addToCart(product)); count = count + 1 }}>
                     +
                   </Button>
 
                   <Button variant="outlined" color="primary"
-                    onClick={() => dispatch(remove(product))}>
+                    onClick={() => { dispatch(remove(product)); count = count - 1 }}>
                     Remove
                   </Button>
 

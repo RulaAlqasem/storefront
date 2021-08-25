@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Products.scss';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,8 +10,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, switchProducts } from '../store/action';
-
+import { addToCart, switchProducts } from '../store/cart';
+import { loadProducts } from '../store/products';
 
 const useStyles = makeStyles({
   root: {
@@ -26,17 +26,27 @@ const Products = (props) => {
   const dispatch = useDispatch()
   const state = useSelector(state => state)
   const classes = useStyles();
+
+
+  useEffect(() => {
+    dispatch(loadProducts());
+  }, []);
+
+  // useEffect(async () => {
+  //   await dispatch(getProducts());
+  // })
+
   return (
     <div className="products">
       <h2>{state.categories.activeCategory.displayName}</h2>
       <h2 className="description">{state.categories.activeCategory.description}</h2>
-      {state.products.products.map((product, i) => {
+      {state.products.products?.map((product, i) => {
         return (
           <Card key={i} className={classes.root}>
             <CardActionArea>
               <CardMedia
                 className={classes.media}
-                image="/logo192.png"
+                image='/logo192.png'
                 title="Product Picture"
               />
               <CardContent>
