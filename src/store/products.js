@@ -1,39 +1,8 @@
-let productList = [
-  {
-    name: 'keyboard',
-    category: 'electronics',
-    description: 'Typing Device',
-    price: 5,
-    inStock: 10,
-    count: 0
-  },
-  {
-    name: 'Mouse',
-    category: 'electronics',
-    description: 'Mousing Device',
-    price: 10,
-    inStock: 5,
-    count: 0
-  },
-  {
-    name: 'Kumquats',
-    category: 'food',
-    description: 'Delicious',
-    price: 20,
-    inStock: 2,
-    count: 0
-  },
-  {
-    name: 'Kiwi',
-    category: 'food',
-    description: 'yummiiii',
-    price: 3,
-    inStock: 7,
-    count: 0
-  },
-]
+import axios from 'axios';
+
 
 let initialState = {
+  productsList: [],
   products: [],
 }
 
@@ -43,11 +12,36 @@ export default function ProductsReducer(state = initialState, action) {
   let { type, payload } = action;
 
   switch (type) {
-    case "FILTER_PRODUCTS":
-      newProducts = productList.filter(product => product.category === payload);
+    case "LOAD_PRODUCTS":
+      console.log(payload.results);
+      return {
+        productList: payload.results,
+        products: []
+      }
 
-      return { products: newProducts };
+    case "FILTER_PRODUCTS":
+      let newProductList = state.productList;
+      newProducts = newProductList.filter(product => product.category === payload);
+      return { products: newProducts, productList: state.productList };
+
+
     default: return state;
-  }
+  };
 }
 
+export const loadProducts = () => (dispatch, getState) => {
+  return axios.get('https://api-js401.herokuapp.com/api/v1/products')
+    .then(response => {
+      dispatch({
+        type: 'LOAD_PRODUCTS',
+        payload: response.data
+      });
+    });
+}
+
+export function switchProducts(name) {
+  return {
+    type: "FILTER_PRODUCTS",
+    payload: name,
+  };
+}

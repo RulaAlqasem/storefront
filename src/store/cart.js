@@ -1,7 +1,10 @@
+import axios from "axios";
+
 let initialState = {
   cart: [],
   count: 0,
   show: false,
+  g: 0
 };
 let newCart;
 let newCart2;
@@ -11,28 +14,34 @@ export default function CategoriesReducer(state = initialState, action) {
   switch (type) {
     case "ADD_TO_CART":
 
-      if (!state.cart.includes(payload)) {
-        payload.count++
-        newCart = [...state.cart, payload];
-        payload.inStock--
+      if (payload.inStock <= 0) {
+        alert("there is no more from this product")
 
       }
-      else if (payload.inStock == 0) {
-        alert("there is no more from this product")
+
+      else if (!state.cart.includes(payload) && payload.inStock > 0) {
+        payload.cart = 1
+
+        state.cart = [...state.cart, payload];
+
+        payload.inStock--
+        state.count += 1;
       }
+
       else {
         newCart = [...state.cart]
-        payload.count++
+        payload.cart++
         payload.inStock--
       }
-      const count = state.count + 1;
 
-      return { cart: newCart, count, show: true, };
+
+      return { cart: state.cart, count: state.count, show: true, };
+
 
     case "REMOVE_FROM_CART":
-      payload.count--
+      payload.cart--
       payload.inStock++
-      if (payload.count === 0) {
+      if (payload.cart === 0) {
         newCart2 = state.cart.filter((p) => p !== payload);
 
       }
@@ -44,8 +53,8 @@ export default function CategoriesReducer(state = initialState, action) {
       };
 
     case "REMOVE":
-      payload.inStock = payload.inStock + payload.count
-      payload.count = 0
+      payload.inStock = payload.inStock + payload.cart
+      payload.cart = 0
       let c = state.cart.filter((p) => p !== payload)
 
       let count1 = state.count - 1
@@ -57,4 +66,55 @@ export default function CategoriesReducer(state = initialState, action) {
 
     default: return state;
   }
+}
+
+
+
+export const addToCart = (name) => async (dispatch, getState) => {
+
+  return await axios({
+    method: 'put',
+    url: `https://api-js401.herokuapp.com/api/v1/products/${name._id}`,
+    data: name,
+  })
+    .then(response => {
+      console.log(response.data);
+      dispatch({
+        type: "ADD_TO_CART",
+        payload: name,
+      });
+    });
+}
+
+export const removeFromCart = (name) => async (dispatch, getState) => {
+
+  return await axios({
+    method: 'put',
+    url: `https://api-js401.herokuapp.com/api/v1/products/${name._id}`,
+    data: name,
+  })
+    .then(response => {
+      console.log(response.data);
+      dispatch({
+        type: "REMOVE_FROM_CART",
+        payload: name,
+      });
+    });
+}
+
+
+export const remove = (name) => async (dispatch, getState) => {
+
+  return await axios({
+    method: 'put',
+    url: `https://api-js401.herokuapp.com/api/v1/products/${name._id}`,
+    data: name,
+  })
+    .then(response => {
+      console.log(response.data);
+      dispatch({
+        type: "REMOVE",
+        payload: name,
+      });
+    });
 }

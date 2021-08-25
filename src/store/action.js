@@ -13,21 +13,21 @@ export function switchProducts(name) {
 }
 
 
-export function addToCart(name) {
-  return {
-    type: "ADD_TO_CART",
-    payload: name,
-  }
-}
-export function removeFromCart(name) {
-  return {
-    type: "REMOVE_FROM_CART",
-    payload: name,
-  }
-}
-export function remove(name) {
-  return {
-    type: "REMOVE",
-    payload: name,
-  }
-}
+// export function addToCart(name) {
+//   return {
+//     type: "ADD_TO_CART",
+//     payload: name,
+//   }
+// }
+// export function removeFromCart(name) {
+//   return {
+//     type: "REMOVE_FROM_CART",
+//     payload: name,
+//   }
+// }
+// export function remove(name) {
+//   return {
+//     type: "REMOVE",
+//     payload: name,
+//   }
+// }

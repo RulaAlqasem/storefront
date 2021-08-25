@@ -1,17 +1,20 @@
 let categoryList = [
   {
     name: 'electronics',
-    displayName: 'ELECTRONICS',
+    displayName: 'electronics',
     description: 'Technical Wonders',
     active: false,
   },
   {
     name: 'food',
-    displayName: 'FOOD',
+    displayName: 'food',
     description: 'Tasty Delights',
     active: false,
-  }
+  },
+
 ]
+
+
 
 let initialState = {
   categories: categoryList,
